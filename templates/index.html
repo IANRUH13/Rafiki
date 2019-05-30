@@ -1,0 +1,50 @@
+
+{% extends "main.html" %}
+{% block content %}
+<div class="wallpaper">
+<div class="center">
+
+<nav>
+ <button type="submit">
+<span aria-hidden="true"></span>Open Up</button>
+
+ <button type="submit">
+<span aria-hidden="true"></span>About Rafiki</button>
+
+ <button onclick="register()" type="submit">
+<span aria-hidden="true"></span>Register</button>
+</nav>
+<section>
+
+
+<div id="user" style="display:"none";">
+  This is my DIV element.
+</div>
+
+    <div class="space-150 ">
+    </div>
+<h1>Rafiki</h1>
+<ul>
+    <li>Funguka</li>
+    <li>Share</li>
+    <li>Vent</li>
+    <li>Bonga</li>
+    <li>Unwind</li>
+    <li>Sema Kitu</li>
+    <li>Ongea</li>
+</ul>
+<span>Talk about whatever's weighing heavily on your mind here, anonymously.</span>
+</section>
+</div>
+
+<script>
+function register() {
+  var x = document.getElementById("user");
+  if (x.style.display === "block") {x.style.display === "block"
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+</script>
+{% endblock %}

@@ -13,9 +13,7 @@ Method | Endpoint | Function |
 |POST| `/api/v1/rafiki/share_id/counsel` | respond anonymously . |
 |POST| `api/v1/rafiki/search/share_id` | Search for posts based on keyword. |
 |POST| `api/v1/rafiki/share_id/report` | Report an offensive post anonymously. |
-
-|    . |    .  |     .     |
-|Rafiki| ------ |     |
+|Rafiki| . |   .   |
 |POST| `api/v1/rafiki/register` |  set up a Rafiki account . |
 |POST| `/api/v1/rafiki/share_id/rafiki_name` |  Login to a Rafiki account. |
 |POST| `api/v1/rafikiki/login` |  Respond with a Rafiki account. |

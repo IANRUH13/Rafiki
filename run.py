@@ -1,9 +1,11 @@
-from flask import Flask,jsonify,make_response,request,render_template,Response,current_app
+from flask import Flask,jsonify,make_response,request,render_template,Response,current_app,flash
 from werkzeug import secure_filename
 import os
-app = Flask(__name__)
 
 from model import User
+
+app = Flask(__name__)
+app.secret_key ="371a7a78d634dd71ce5f215d4827ea919d00ea50a9e20482d7adefd8a5156b78"
 
 
 UPLOAD_FOLDER = '/home/mugz/Projects/Rafiki/static'
@@ -17,6 +19,11 @@ def allowed_file(filename):
 @app.route('/index')
 def rafiki():
 	return Response(render_template('index.html'))
+
+@app.route('/about')
+def about():
+    return Response(render_template('about.html'))
+
 
 
 @app.route('/register',methods=['GET', 'POST'])
@@ -34,10 +41,9 @@ def add_rafiki():
 
 
         User().save_users(name,email,password,photo)
-        return Response(render_template('login.html'))
+        flash('Registration Sucessful')
+        return Response(render_template('index.html'))
 
-    else:
-         return Response(render_template('register.html'))
 
 @app.route('/login',methods=['GET', 'POST'])
 def auth():
@@ -49,10 +55,13 @@ def auth():
         user = User().login(email,password)
 
         if user:
-            return Response(render_template('index.html',photo=user['photo']))
+            flash('Login Succesful')
+            return Response(render_template('index.html'))
 
-    else:
-        return Response(render_template('login.html'))
+        else:
+            flash('Login Failure')
+            return Response(render_template('index.html'))
 
 if __name__ == '__main__':
-	app.run()
+
+    app.run()

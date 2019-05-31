@@ -16,22 +16,10 @@
 
 </nav>
 
-<div class='flash'>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-        {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-</div><br/>
-
 <section>
     <div id="login" style="display:none;">
          <div class="container">
-               <a href="#"><p onclick="collapse()" id="close">X</p></a>
+            <a href="#"><p onclick="collapse()" id="close">X</p></a>
       <form action="{{url_for('auth')}}" method = "post" enctype=multipart/form-data>
 
                 <label for="email">Email:</label>
@@ -53,7 +41,7 @@
 <div id="add_user" style="display:none;">
 
  <div class="container">
-     <a href="#"><p onclick="collapse()" id="close">X</p></a>
+    <a href="#"><p onclick="collapse()" id="close">X</p></a>
 
       <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
 
@@ -82,55 +70,36 @@
                 <span aria-hidden="true"></span>Sign Up</button>
 
                  <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
+               </form>
             </div>
+          </div>
 
 
-            </form>
+
+
+
+<div id="about">
+
+ <div class="container">
+
+<h1>RAFIKI?</h1>
+
+<p>Rafiki offers a safe heaven to talk about daily stress that's weighing heavily on the mind.
+It achieves this through offering anonymous communication among users since a personal account will not be required.</p>
+<p>
+This eradicates fear of judgment enabling users to open up about their well-being in order to get reliable feedback.
+ Rafiki is a user who is not anonymous and have excellent counseling hence making them more knowledgeable to reply
+ concerns such as stress,depression,anxiety disorders among others.</p>
+
+
+
+
 
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="space-100 "></div>
-
-<h1>Rafiki</h1>
-<span>Talk about what's weighing heavily on your mind here, anonymously.</span><br />
-<div class"row">
-         <h4 class="item-1">Funguka</h4>
-    <h4 class="item-2">Share</h4>
-    <h4 class="item-3">Ongea</h4>
-  <div class="space-100 "></div>
 </div>
 
-
- <button type="submit">
-<span aria-hidden="true"></span>Bonga</button>
 
 </section>
 </div>
@@ -139,7 +108,9 @@
 function register() {
   var x = document.getElementById("add_user");
   var y = document.getElementById("login");
+  var z = document.getElementById("about");
   y.style.display = "none";
+  z.style.display = "none";
 
   if (x.style.display === "block") {x.style.display === "block"
     x.style.display = "none";
@@ -149,8 +120,10 @@ function register() {
 }
 function login() {
      var x = document.getElementById("add_user");
-     x.style.display = "none";
      var y = document.getElementById("login");
+      var z = document.getElementById("about");
+      x.style.display = "none";
+      z.style.display = "none";
 
   if (y.style.display === "block") {y.style.display === "block"
     y.style.display = "none";
@@ -159,14 +132,6 @@ function login() {
   }
 }
 
-function collapse() {
-     var x = document.getElementById("add_user");
-      var y = document.getElementById("login");
-     x.style.display = "none";
-        y.style.display = "none";
-
-
-    }
 
 function preview_image(event)
 {
@@ -179,6 +144,17 @@ function preview_image(event)
  reader.readAsDataURL(event.target.files[0]);
 }
 
+
+function collapse() {
+     var x = document.getElementById("add_user");
+      var y = document.getElementById("login");
+      var z = document.getElementById("about");
+     x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "block";
+
+
+    }
 
 </script>
 {% endblock %}

@@ -13,38 +13,160 @@
 
  <button onclick="register()" type="submit">
 <span aria-hidden="true"></span>Register</button>
+
 </nav>
+
 <section>
+    <div id="login" style="display:none;">
+         <div class="container">
+               <a href="#"><p onclick="collapse()" id="close">X</p></a>
+      <form action="{{url_for('auth')}}" method = "post" enctype=multipart/form-data>
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text"  maxlength="100" required name="pword">
 
 
-<div id="user" style="display:"none";">
-  This is my DIV element.
+                <button type="submit">
+                <span aria-hidden="true"></span>Login</button>
+                <span>Become a Rafiki?<a href="#" onclick="register()">Sign up</a></span>
+
+            </form>
+        </div>
+
 </div>
 
-    <div class="space-150 ">
-    </div>
+<div id="add_user" style="display:none;">
+
+ <div class="container">
+     <a href="#"><p onclick="collapse()" id="close">X</p></a>
+
+      <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
+
+
+
+              <div class="round"><img class="round" id="output_image" "/></div>
+              <input type="file" accept="image/*" onchange="preview_image(event)" name="file">
+
+
+    <br />
+                <label for="name">Enter Name:</label>
+                <input type ="text" maxlength="100" required name="name">
+
+
+
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text" maxlength="100" required name="pword">
+
+
+                <br /><br />
+                <button type="submit" id="submit" type="submit">
+                <span aria-hidden="true"></span>Sign Up</button>
+
+                 <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
+            </div>
+
+
+            </form>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="space-100 "></div>
+
 <h1>Rafiki</h1>
-<ul>
-    <li>Funguka</li>
-    <li>Share</li>
-    <li>Vent</li>
-    <li>Bonga</li>
-    <li>Unwind</li>
-    <li>Sema Kitu</li>
-    <li>Ongea</li>
-</ul>
-<span>Talk about whatever's weighing heavily on your mind here, anonymously.</span>
+<span>Talk about what's weighing heavily on your mind here, anonymously.</span><br />
+<div class"row">
+         <h4 class="item-1">Funguka</h4>
+    <h4 class="item-2">Share</h4>
+    <h4 class="item-3">Ongea</h4>
+  <div class="space-100 "></div>
+</div>
+
+
+ <button type="submit">
+<span aria-hidden="true"></span>Bonga</button>
+
 </section>
 </div>
 
 <script>
 function register() {
-  var x = document.getElementById("user");
+  var x = document.getElementById("add_user");
+  var y = document.getElementById("login");
+  y.style.display = "none";
+
   if (x.style.display === "block") {x.style.display === "block"
     x.style.display = "none";
   } else {
     x.style.display = "block";
   }
 }
+function login() {
+     var x = document.getElementById("add_user");
+     x.style.display = "none";
+     var y = document.getElementById("login");
+
+  if (y.style.display === "block") {y.style.display === "block"
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
+  }
+}
+
+function collapse() {
+     var x = document.getElementById("add_user");
+      var y = document.getElementById("login");
+     x.style.display = "none";
+        y.style.display = "none";
+
+
+    }
+
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+
 </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 from db_con import database_setup
+from passlib.hash import sha256_crypt
 
 class User():
 
@@ -12,7 +13,7 @@ class User():
 
             "name": name,
             "email": email,
-            "password": password,
+            "password":sha256_crypt.encrypt(password),
             "photo": photo
 
         }
@@ -27,8 +28,15 @@ class User():
 
     def login(self, email, password):
 
-        query = "SELECT name,email,photo FROM Users WHERE email = '%s' AND password = '%s';" % (email, password)
+        query = "SELECT password FROM Users WHERE email = '%s';" % (email)
         self.cursor.execute(query)
-        users = self.cursor.fetchone()
+        pword = self.cursor.fetchone()
 
-        return users
+        isValid = sha256_crypt.verify(password,pword[0])
+
+        if isValid:
+            query = "SELECT name,email,photo FROM Users WHERE email = '%s';" % (email)
+            self.cursor.execute(query)
+            users = self.cursor.fetchone()
+
+            return users

@@ -5,28 +5,53 @@
 <div class="center">
 
 <nav>
- <button type="submit">
-<span aria-hidden="true"></span>Open Up</button>
+<a href="{{ url_for('rafiki') }}"> <button>Home</button></a>
+<button>Open Up</button></a>
 
 <a href="{{ url_for('about') }}"> <button>About Rafiki</button></a>
 
- <button onclick="register()" type="submit">
-<span aria-hidden="true"></span>Register</button>
+
+
+{% if photo %}
+
+<a href="{{ url_for('logout') }}"> <button>LogOut</button></a>
+
+<figure class="creator">
+<img src="/static/{{ photo }}"/>
+</figure>
+
+{% else %}
+ <button onclick="register()" type="submit"></span>Register</button>
+
+<figure class="creator">
+<img src="/static/user.png"/>
+</figure>
+
+{% endif %}
+
+<div class="right">
+ <form  style="padding-left:80px;" action="{{url_for('rafiki')}}" method="post" enctype=multipart/form-data>
+            <input type="search" placeholder="Search" name="book">
+              <button>Search</button>
+        </form>
+</div>
 
 </nav>
 
-<div class='flash'>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
+<div class='flash'>
+
       <ul>
         {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
+            <li><strong> {{ message }} </strong> </li>
         {% endfor %}
       </ul>
+
+</div>
     {% endif %}
   {% endwith %}
-</div><br/>
-
+  <br/>
 <section>
     <div id="login" style="display:none;">
          <div class="container">
@@ -54,64 +79,33 @@
  <div class="container">
      <a href="#"><p onclick="collapse()" id="close">X</p></a>
 
-      <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
-
-
-
+      <form id="user-form" action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
               <div class="round"><img class="round" id="output_image" "/></div>
               <input type="file" accept="image/*" onchange="preview_image(event)" name="file">
 
 
     <br />
                 <label for="name">Enter Name:</label>
-                <input type ="text" maxlength="100" required name="name">
 
-
-
+                <input pattern=".{3,}" type ="text" required title="3 characters minimum" required name="name">
+                <span id="user-error"></span>
 
                 <label for="email">Email:</label>
-                <input type ="text"  maxlength="100" required name="email">
+                <input type ="email" required name="email">
 
                 <label for="pword">Password:</label>
-                <input type ="text" maxlength="100" required name="pword">
-
+                <input type ="text" required title="5 characters minimum" type ="password"  required name="pword">
 
                 <br /><br />
-                <button type="submit" id="submit" type="submit">
-                <span aria-hidden="true"></span>Sign Up</button>
+                <button type="submit">Sign Up</button>
 
                  <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
-            </div>
-
 
             </form>
 
 
-
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -177,6 +171,7 @@ function preview_image(event)
  }
  reader.readAsDataURL(event.target.files[0]);
 }
+
 
 
 </script>

@@ -4,17 +4,41 @@
 <div class="wallpaper">
 <div class="center">
 
+
 <nav>
- <button type="submit">
-<span aria-hidden="true"></span>Open Up</button>
+<a href="{{ url_for('rafiki') }}"> <button>Home</button></a>
+<button>Open Up</button></a>
 
- <button type="submit">
-<span aria-hidden="true"></span>About Rafiki</button>
+<a href="{{ url_for('about') }}"> <button>About Rafiki</button></a>
 
- <button onclick="register()" type="submit">
-<span aria-hidden="true"></span>Register</button>
+
+
+{% if photo %}
+
+<a href="{{ url_for('logout') }}"> <button>LogOut</button></a>
+
+<figure class="creator">
+<img src="/static/{{ photo }}"/>
+</figure>
+
+{% else %}
+ <button onclick="register()" type="submit"></span>Register</button>
+
+<figure class="creator">
+<img src="/static/user.png"/>
+</figure>
+
+{% endif %}
+
+<div class="right">
+ <form  style="padding-left:80px;" action="{{url_for('rafiki')}}" method="post" enctype=multipart/form-data>
+            <input type="search" placeholder="Search" name="book">
+              <button>Search</button>
+        </form>
+</div>
 
 </nav>
+
 
 <section>
     <div id="login" style="display:none;">

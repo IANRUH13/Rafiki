@@ -51,6 +51,42 @@ def about():
 
 
 
+@app.route('/share',methods=['GET','POST'])
+@jwt_optional
+def share():
+    current_user = get_jwt_identity()
+    if request.method == 'POST':
+        if current_user:
+            photo = current_user[2]
+            email = current_user[1]
+            story = request.form['story']
+            User().share(email,story)
+
+            stories =  User().stories()
+            return Response(render_template('share.html',photo=photo,stories= stories))
+
+        else:
+            email = "jdoe@email.com"
+            story = request.form['story']
+            User().share(email,story)
+
+
+    if current_user:
+        photo = current_user[2]
+        stories =  User().stories()
+        return Response(render_template('share.html',photo=photo,stories= stories))
+
+
+    else:
+        stories =  User().stories()
+        return Response(render_template('share.html',stories= stories))
+
+
+
+
+
+
+
 @app.route('/register',methods=['GET', 'POST'])
 def add_rafiki():
 
@@ -102,6 +138,7 @@ def auth():
         else:
             flash('Error')
             return Response(render_template('index.html'))
+
 
 if __name__ == '__main__':
 

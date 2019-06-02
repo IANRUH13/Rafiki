@@ -1,0 +1,194 @@
+{% extends "main.html" %}
+{% block content %}
+
+<nav>
+  <div class="center">
+    <a href="{{ url_for('rafiki') }}"> <button>Home</button></a>
+    <a href="{{ url_for('share') }}"><button>Open Up</button></a>
+    <a href="{{ url_for('about') }}"> <button>About Rafiki</button></a>
+    {% if photo %}
+      <a href="{{ url_for('logout') }}"> <button>LogOut</button></a>
+      <figure class="creator">
+        <img src="/static/{{ photo }}"/>
+      </figure>
+    {% else %}
+      <button onclick="register()" type="submit"></span>Register</button>
+        <figure class="creator">
+          <img src="/static/user.png"/>
+        </figure>
+    {% endif %}
+
+    <div class="right">
+      <form  style="padding-left:80px;" action="{{url_for('rafiki')}}" method="post" enctype=multipart/form-data>
+          <input type="search" placeholder="Search" name="book">
+          <button>Search</button>
+        </form>
+    </div>
+  </div>
+</nav>
+<body>
+<section>
+    <div id="login" style="display:none;">
+         <div class="container">
+            <a href="#"><p onclick="collapse()" id="close">X</p></a>
+      <form action="{{url_for('auth')}}" method = "post" enctype=multipart/form-data>
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text"  maxlength="100" required name="pword">
+
+
+                <button type="submit">
+                <span aria-hidden="true"></span>Login</button>
+                <span>Become a Rafiki?<a href="#" onclick="register()">Sign up</a></span>
+
+            </form>
+        </div>
+
+</div>
+
+<div id="add_user" style="display:none;">
+
+ <div class="container">
+    <a href="#"><p onclick="collapse()" id="close">X</p></a>
+
+      <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
+
+
+
+              <div class="round"><img class="round" id="output_image" "/></div>
+              <input type="file" accept="image/*" onchange="preview_image(event)" name="file">
+
+
+    <br />
+                <label for="name">Enter Name:</label>
+                <input type ="text" maxlength="100" required name="name">
+
+
+
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text" maxlength="100" required name="pword">
+
+
+                <br /><br />
+                <button type="submit" id="submit" type="submit">
+                <span aria-hidden="true"></span>Sign Up</button>
+
+                 <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
+               </form>
+            </div>
+          </div>
+
+<div class="center">
+<div class="padding-bottom"></div>
+<div class="divider blue"></div>
+  <div class="banner"></div>
+  <div class="padding-bottom"></div>
+  <button onclick="share()">Post</button>
+<div class="padding-bottom"></div>
+  <div id="tale" style="display:none;">
+
+  <div class="container">
+    <div class="wrap">
+  <form action="{{url_for('share')}}" method = "post" enctype=multipart/form-data>
+        <textarea name="story"></textarea>
+        <button  type="submit">Create</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+ {% for story in stories %}
+  <div class="container-wrapper">
+
+    <div class="wrap">
+<p> {{ story[0] }} </p>
+    </div>
+
+
+  </div>
+  <div class="padding-bottom"></div>
+   {% endfor %}
+
+
+</div>
+</section>
+</div>
+</body>
+<script>
+function register() {
+  var x = document.getElementById("add_user");
+  var y = document.getElementById("login");
+  var z = document.getElementById("about");
+  y.style.display = "none";
+  z.style.display = "none";
+
+  if (x.style.display === "block") {x.style.display === "block"
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+function login() {
+     var x = document.getElementById("add_user");
+     var y = document.getElementById("login");
+      var z = document.getElementById("about");
+      x.style.display = "none";
+      z.style.display = "none";
+
+  if (y.style.display === "block") {y.style.display === "block"
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
+  }
+}
+
+
+function share() {
+     var story = document.getElementById("tale");
+
+  if (story.style.display === "block") {y.style.display === "block"
+    story.style.display = "none";
+  } else {
+    story.style.display = "block";
+  }
+}
+
+
+
+
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+
+function collapse() {
+     var x = document.getElementById("add_user");
+      var y = document.getElementById("login");
+      var z = document.getElementById("about");
+     x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "block";
+
+
+    }
+
+</script>
+{% endblock %}

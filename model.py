@@ -40,3 +40,28 @@ class User():
             users = self.cursor.fetchone()
 
             return users
+
+
+    def share(self,email,story):
+
+        post = {
+            "email": email,
+            "story": story
+        }
+
+        query = """INSERT INTO share (email,story)
+            VALUES(%(email)s, %(story)s);"""
+
+        self.cursor.execute(query, post)
+        self.database.conn.commit()
+
+        return post
+
+
+    def stories(self):
+        query = "SELECT story,post_date,email FROM share;"
+        self.cursor.execute(query)
+        stories= self.cursor.fetchall()
+
+        return stories
+

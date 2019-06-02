@@ -1,10 +1,10 @@
 # Rafiki
-Rafiki offers a safe heaven to talk about daily stress that's weighing heavily on the mind. It achieves this through offering anonymous communication among users since a personal account will not be required. This eradicates fear of judgment enabling users to open up about their well-being in order to get reliable feedback. Rafiki is a user who is not anonymous and have excellent counseling hence making them more knowledgeable to reply concerns such as stress,depression,anxiety disorders among others. 
+Rafiki offers a safe heaven to talk about daily stress that's weighing heavily on the mind. It achieves this through offering anonymous communication among users since a personal account will not be required. This eradicates fear of judgment enabling users to open up about their well-being in order to get reliable feedback. Rafiki is a user who is not anonymous and have excellent counseling hence making them more knowledgeable to reply concerns such as stress,depression,anxiety disorders among others.
 
 
 
 
-### api End points
+### API End points
 Method | Endpoint | Function |
 | ------ | -------------| --------------- |
 |USER| . |   .   |

@@ -17,7 +17,7 @@ class database_setup(object):
     def create_tables(self):
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Users (
             name VARCHAR(50) NOT NULL,
-            post_date TIMESTAMP,
+            post_date DATE NOT NULL DEFAULT CURRENT_DATE,
             email VARCHAR(50)  UNIQUE NOT NULL,
             password VARCHAR(256) NOT NULL,
             photo VARCHAR(255) NOT NULL,
@@ -27,11 +27,12 @@ class database_setup(object):
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Share (
             share_id SERIAL NOT NULL,
-            story VARCHAR(500) NOT NULL,
-            post_date TIMESTAMP,
-            email VARCHAR(25) REFERENCES Users(email) NOT NULL,
+            story TEXT NOT NULL,
+            post_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            email VARCHAR(50) REFERENCES Users(email) NOT NULL,
             PRIMARY KEY (share_id)
-            );""")
+            );
+            """)
 
 
 

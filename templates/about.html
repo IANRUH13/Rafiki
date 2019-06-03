@@ -1,47 +1,50 @@
 
 {% extends "main.html" %}
 {% block content %}
-<div class="wallpaper">
-<div class="center">
+<body>
+ <nav>
+  <div class="row">
+    <div class="center">
+      <img onclick="showBtn()" class="menu-icon" src="/static/menu.png"/>
+      <a href="{{ url_for('rafiki') }}"> <button class ="menu-btn">Home</button></a>
+      <a href="{{ url_for('share') }}"><button class ="menu-btn">Open Up</button></a>
+      <a href="{{ url_for('about') }}"> <button class ="menu-btn">About Rafiki</button></a>
 
+         {% if photo %}
+          <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
-<nav>
-<a href="{{ url_for('rafiki') }}"> <button>Home</button></a>
-<a href="{{ url_for('share') }}"><button>Open Up</button></a>
-<a href="{{ url_for('about') }}"> <button>About Rafiki</button></a>
-
-{% if photo %}
-
-<a href="{{ url_for('logout') }}"> <button>LogOut</button></a>
-
-<figure class="creator">
-<img src="/static/{{ photo }}"/>
-</figure>
-
-{% else %}
- <button onclick="register()" type="submit"></span>Register</button>
-
-<figure class="creator">
-<img src="/static/user.png"/>
-</figure>
-
-{% endif %}
-
-<div class="right">
- <form  style="padding-left:80px;" action="{{url_for('rafiki')}}" method="post" enctype=multipart/form-data>
-            <input type="search" placeholder="Search" name="book">
-              <button>Search</button>
+              <div class="right"><img src="/static/{{ photo }}"/></div>
+                      <form action="{{url_for('rafiki')}}" method="post">
+          <input type="search" placeholder="Search" name="search">
+            <input type="submit"/>
         </form>
-</div>
+
+
+      {% else %}
+      <button class ="menu-btn" onclick="register()">Register</button>
+
+        <div class="right"><img src="/static/user.png"/></div>
+                  <form action="{{url_for('rafiki')}}" method="post">
+          <input type="search" placeholder="Search" name="search">
+            <input type="submit">
+
+        </form>
+
+      {% endif %}
+
+      </div>
+
+    </div>
 
 </nav>
-
-
 <section>
+    <div class="row">
+    <div class="center">
+        <div class="col-8">
     <div id="login" style="display:none;">
          <div class="container">
             <a href="#"><p onclick="collapse()" id="close">X</p></a>
-      <form action="{{url_for('auth')}}" method = "post" enctype=multipart/form-data>
+      <form action="{{url_for('auth')}}" method="post">
 
                 <label for="email">Email:</label>
                 <input type ="text"  maxlength="100" required name="email">
@@ -50,8 +53,7 @@
                 <input type ="text"  maxlength="100" required name="pword">
 
 
-                <button type="submit">
-                <span aria-hidden="true"></span>Login</button>
+                <button type="submit">Login</button>
                 <span>Become a Rafiki?<a href="#" onclick="register()">Sign up</a></span>
 
             </form>
@@ -101,7 +103,6 @@
 
 <div id="about">
 
- <div class="container">
 
 <h1>RAFIKI?</h1>
 
@@ -114,24 +115,21 @@ This eradicates fear of judgment enabling users to open up about their well-bein
 
 
 
-
-
-
+</div>
 
 </div>
 </div>
-
-
+</div>
 </section>
-</div>
-
+<div class="padding-bottom"></div>
+</body>
 <script>
 function register() {
   var x = document.getElementById("add_user");
   var y = document.getElementById("login");
-  var z = document.getElementById("about");
+
   y.style.display = "none";
-  z.style.display = "none";
+
 
   if (x.style.display === "block") {x.style.display === "block"
     x.style.display = "none";
@@ -142,9 +140,9 @@ function register() {
 function login() {
      var x = document.getElementById("add_user");
      var y = document.getElementById("login");
-      var z = document.getElementById("about");
+
       x.style.display = "none";
-      z.style.display = "none";
+
 
   if (y.style.display === "block") {y.style.display === "block"
     y.style.display = "none";
@@ -176,6 +174,22 @@ function collapse() {
 
 
     }
+
+      function showBtn() {
+
+  var elems = document.getElementsByClassName('menu-btn');
+
+  var x = document.getElementsByClassName('menu-btn')[0]
+  if (x.style.display === "block"){
+    for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'none';
+     }
+   }else{
+         for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'block';
+     }
+}
+}
 
 </script>
 {% endblock %}

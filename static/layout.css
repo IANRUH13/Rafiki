@@ -1,56 +1,38 @@
 /*  UNIVERSAL */
-
-
-.banner{
-    height: 150px;
-  background: url("/static/bg.jpg");
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.divider {
-  height: 15px;
-}
-
-.divider.blue {
-  background-color: #29b6f6 !important;
-}
-
-.padding-bottom {
-  padding-bottom: 30px;
-}
-
-.creator {
-  float:right;
-  margin: 0;
-}
-.creator img {
-  width: 60px;
-  height:60px;
-  border-radius: 50%;
-}
-
-body{
-   margin: 0;
-   padding:0;
-}
-
-.orange-text{
-  color:#ff9800 !important;
-}
-
-* {
+/* Ensure padding and border are included in t.width & height*/
+*{
+  box-sizing:border-box;
   font-family: "Helvetica Neue Bold", Roboto, Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
 
+/* THE GRID */
+
+[class*="col-"]{
+  float:left;
+  padding:15px;
+
+}
+.row{
+  width:100%;
+}
+
+.row::after{
+  content:"";
+  clear:both;
+  display:table;
+}
+
 /*  LAYOUT */
 
-
+body{
+   margin: 0;
+   padding:0;
+   overflow-x: hidden;
+}
 nav{
 
-   color: #fff;
+  color: #fff;
   background-color: #29b6f6 ;
   margin:0;
   padding:0;
@@ -74,24 +56,35 @@ footer{
 
 
 .container{
-  left:0;
-  right:0;
-  width:50%;
-   padding:15px 10px;
-  position: absolute;
-  margin:0 auto;
+
+  padding:5px 10px;
   color: rgba(255, 255, 255, 0.9);
   background-color: rgba(51, 51, 51, 0.8);
-
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  top:0;
+  left:0;
+  right:0;
+  width:60%;
+  margin: 5% auto;
+  overflow: auto;
 }
 
-.row{
-  width:100%;
+.banner{
+  height: 150px;
+  background: url("/static/bg.jpg");
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+.divider {
+  height: 15px;
+}
+
 .slider{
   width:100%;
   height: 50px;
-  overflow: hidden;
 
 }
 #close{
@@ -100,8 +93,13 @@ footer{
 }
 
 .right{
-  width:40%;
   float:right;
+}
+.clear{
+  content:"";
+  clear:both;
+  display:table;
+
 }
 .wrapper{
   width: 50%;
@@ -109,19 +107,25 @@ footer{
 
 .container-wrapper{
   width: 100%;
-  padding: 10px 0px;
-   background-color: rgba(51, 51, 51, 0.8);
+  height:inherit;
+
+  background: #f7f7f7;
+   border-bottom:1px solid #ff9800;
 
 }
 
 .wrap{
   width:100%;
   height: 100%;
-  color: rgba(255, 255, 255, 0.8);
+    padding:0px 10px;
 
-    overflow: hidden;
 }
 
+
+.menu-icon{
+  float:left;
+  display:none;
+}
 
 .round{
   width:50%;
@@ -132,7 +136,7 @@ footer{
   display: none;
 }
 .center {
-    width:90%;
+  width:90%;
     margin:0 auto;
 }
 
@@ -145,7 +149,13 @@ footer{
     height:100px;
 }
 
+.padding-bottom {
+  padding-bottom: 30px;
+}
 
+nav form{
+  float:right;
+}
 /*  MESSAGING */
 
 .flash {
@@ -201,6 +211,7 @@ li a {
 }
 
 
+
 /*  IMAGE */
 
 #output_image{
@@ -216,6 +227,23 @@ margin: 0 auto;
   border-radius: 50%;
   margin: 0 auto;
 }
+
+nav img {
+  width: 60px;
+  height:60px;
+  border-radius: 50%;
+}
+
+
+/*  COLOR */
+.orange-text{
+  color:#ff9800 !important;
+}
+
+.divider.blue {
+  background-color: #29b6f6 !important;
+}
+
 
 
 /*  FONTS */
@@ -237,10 +265,7 @@ h5 {
 
 /* Form */
 
-form{
-  width: 80%;
-  margin:0 auto;
-}
+
 
 
 textarea{
@@ -257,7 +282,9 @@ textarea{
 
 }
 input[type=search] {
- padding: 10px 10px;
+ padding: 0px 10px;
+
+    height:40px;
 }
 input[type=text],input[type=password],input[type=email] {
     width:100%;
@@ -268,11 +295,13 @@ input[type=text],input[type=password],input[type=email] {
 }
 
 input[type=submit] {
-    width:49%;
     height:40px;
-    background-color:#4CAF50;
-    padding:6px 10px;
-    margin:8px 0;
+    background-color: #ff9800  !important;
+  border: none;
+  text-transform: uppercase;
+  padding: 0px 10px;
+   color:white;
+
 
 }
 
@@ -350,15 +379,114 @@ button {
 
 
 
-
-
-
 /*********************
-  Media Query Classes
+  Accessibility
 **********************/
-@media only screen and (max-width: px) {
 
-    /*     Layout   */
+
+ /*Keyboard Accessibility*/
+*:focus{
+  outline:0;
+  box-shadow:0 0 10px #ff9800 ;
+  border-color:#ff9800 ;
+}
+
+a:focus{
+  color:#ff9800 ;
+  font-weight: bold;
+}
+
+button:focus{
+  background-color: #ff9800 ;
+}
+
+/* FOCUS ORDER */
+
+/* By default the focus order follows the structure of the html page*/
+
+
+
+/***************************
+  Media Query Classes THE GRID
+****************************/
+
+@media only screen and (min-width: 768px) {
+
+  /* For desktop */
+
+.col-1{width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3{width: 25%;}
+.col-4{width: 33.33%;}
+.col-5{width: 41.66%;}
+.col-6{width: 50%;}
+.col-7{width: 58.33%;}
+.col-8{width: 66.66%;}
+.col-9{width: 75%;}
+.col-10{width: 83.33%;}
+.col-11{width: 91.66%;}
+.col-12{width: 100%;}
+
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    /* For mobile phones: */
+
+
+  .container{
+    width:90%;
+  }
+    /*  img */
+
+    nav a {
+    display:block;
+    color:white;
+    text-decoration: none;
+}
+
+ .right img{
+  display:none;
+}
+
+nav form{
+  display:none;
+}
+
+.menu-btn{
+   width:100%;
+   display: none;
+}
+
+.menu-icon{
+  display: block;
+}
+.right{
+  float:left;
+}
+
+
+  [class*="col-"] {
+    width: 100%;
+  }
+}
 
 
 

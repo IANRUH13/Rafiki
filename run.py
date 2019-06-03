@@ -105,7 +105,14 @@ def add_rafiki():
         email=request.form['email']
         password=request.form['pword']
         User().save_users(name,email,password,photo)
-        flash('Success')
+        user = User().login(email,password)
+        access_token = create_access_token(identity=user, expires_delta=False)
+        # Set the JWT cookies in the response
+        resp = make_response(redirect(url_for('rafiki')))
+        set_access_cookies(resp, access_token)
+        flash("Success")
+        return resp
+
         return Response(render_template('index.html'))
 
 

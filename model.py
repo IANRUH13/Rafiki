@@ -59,7 +59,7 @@ class User():
 
 
     def stories(self):
-        query = "SELECT story,post_date,email FROM share;"
+        query = "SELECT story,post_date,email FROM share ORDER BY share_id DESC;"
         self.cursor.execute(query)
         stories= self.cursor.fetchall()
 

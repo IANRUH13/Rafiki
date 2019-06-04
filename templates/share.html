@@ -13,8 +13,8 @@
           <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
               <div class="right"><img src="/static/{{ photo }}"/></div>
-                      <form action="{{url_for('rafiki')}}" method="post">
-          <input type="search" placeholder="Search" name="search">
+                      <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
             <input type="submit"/>
         </form>
 
@@ -23,8 +23,8 @@
       <button class ="menu-btn" onclick="register()">Register</button>
 
         <div class="right"><img src="/static/user.png"/></div>
-                  <form action="{{url_for('rafiki')}}" method="post">
-          <input type="search" placeholder="Search" name="search">
+                  <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
             <input type="submit">
 
         </form>

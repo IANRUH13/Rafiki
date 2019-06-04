@@ -31,9 +31,17 @@ class database_setup(object):
             post_date DATE NOT NULL DEFAULT CURRENT_DATE,
             email VARCHAR(50) REFERENCES Users(email) NOT NULL,
             PRIMARY KEY (share_id)
-            );
-            """)
+            );""")
 
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS Comments (
+            comment_id SERIAL NOT NULL,
+            comment TEXT NOT NULL,
+            postedon DATE NOT NULL DEFAULT CURRENT_DATE,
+            email VARCHAR(50) REFERENCES Users(email),
+            share_id INT REFERENCES Share(share_id),
+            PRIMARY KEY (comment_id)
+
+            );""")
 
 
         self.conn.commit()

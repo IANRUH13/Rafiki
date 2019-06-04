@@ -87,19 +87,34 @@
 
         <div class="padding-bottom"></div>
 
-        <div class="divider blue"></div>
-        <div class="banner" alt="man on moutain"></div>
+        <div class="divider blue">
+
+
+        </div>
+
+        <div class="header">
+
+          <p>{{ title }}</p>
+          <p style="text-align:right;width:inherit;margin-bottom:0px;"> {{ posted_on }}</p>
+
+
+        </div>
         <div class="padding-bottom"></div>
 
-        <button onclick="share()">Post</button>
+        <button onclick="share()">Respond</button>
         <div class="padding-bottom"></div>
 
-        <div id="tale" style="display:none;">
+
+
+
+
+           <div id="tale" style="display:none;">
 
           <div class="container">
             <a href="#"><p onclick="collapse()" id="close">X</p></a>
             <div class="wrap">
-              <form action="{{url_for('share')}}" method = "post">
+
+              <form action="" method = "post" enctype=multipart/form-data>
                 <textarea name="story"></textarea>
                 <button  type="submit">Create</button>
               </form>
@@ -107,14 +122,14 @@
           </div>
         </div>
 
-        {% for story in stories %}
+          {% for story in stories %}
 
           <div class="container-wrapper">
 
             <div class="wrap">
-              <p> {{ story[1] }} </p>
-                <p style="text-align:right;width:inherit;margin-bottom:0px;" > {{ story[2] }} </p>
-                <a href="{{ url_for('respond',share_id=story[0]) }}"><button  style="margin-bottom:0px;" type="submit">Reply</button></a>
+                <p> {{ story[0] }} </p>
+                <p style="text-align:right;width:inherit;margin-bottom:0px;">{{ story[1] }}</p>
+
 
             </div>
           </div>

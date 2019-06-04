@@ -59,9 +59,42 @@ class User():
 
 
     def stories(self):
-        query = "SELECT story,post_date,email FROM share ORDER BY share_id DESC;"
+        query = "SELECT share_id,story,post_date,email FROM share ORDER BY share_id DESC;"
         self.cursor.execute(query)
         stories= self.cursor.fetchall()
 
         return stories
+
+    def respond(self, share_id, comment, email):
+        resp = {
+            "share_id": share_id,
+            "comment": comment,
+            "email": email
+        }
+
+        query = """INSERT INTO comments(share_id,comment,email)VALUES(%(share_id)s,%(comment)s,%(email)s)"""
+
+        self.cursor.execute(query, resp)
+        self.database.conn.commit()
+
+        return resp
+
+    def get_title(self,share_id):
+        query = "SELECT story,post_date FROM share where share_id = '%s';" % (share_id)
+        self.cursor.execute(query)
+        title = self.cursor.fetchone()
+
+        return title
+
+
+
+    def get_respond(self,share_id):
+        query = "SELECT comment,postedon FROM comments where share_id = '%s' ORDER BY comment_id DESC;" % (share_id)
+        self.cursor.execute(query)
+        stories= self.cursor.fetchall()
+
+        return stories
+
+
+
 

@@ -88,24 +88,16 @@
         <div class="padding-bottom"></div>
 
         <div class="divider blue"></div>
-        <div class="banner" alt="man on moutain"></div>
-        <div class="padding-bottom"></div>
+        <div class="header">
+          <h1 class="orange-text">{{ count }} Found</h1>
+        </form>
 
-        <button onclick="share()">Post</button>
-        <div class="padding-bottom"></div>
-
-        <div id="tale" style="display:none;">
-
-          <div class="container">
-            <a href="#"><p onclick="collapse()" id="close">X</p></a>
-            <div class="wrap">
-              <form action="{{url_for('share')}}" method = "post">
-                <textarea name="story"></textarea>
-                <button  type="submit">Create</button>
-              </form>
-            </div>
-          </div>
         </div>
+        <div class="padding-bottom"></div>
+
+        <div class="padding-bottom"></div>
+
+
 
         {% for story in stories %}
 

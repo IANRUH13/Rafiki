@@ -95,6 +95,11 @@ class User():
 
         return stories
 
+    def search_post(self, search):
+        self.cursor.execute("SELECT * FROM share WHERE story LIKE '%s';" % ("%" + search + "%"))
+        query = self.cursor.fetchall()
+        return query
+
 
 
 

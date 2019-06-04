@@ -83,6 +83,19 @@ def share():
 
 
 
+@app.route('/search',methods=['GET','POST'])
+def find():
+    search = request.form['story']
+    found = User().search_post(search)
+
+    val = 0
+    for item in found:
+        val += 1
+
+    if found:
+        return Response(render_template('search.html', stories=found, count=val))
+    else:
+        return Response(render_template('search.html', stories=found, count="Not"))
 
 
 

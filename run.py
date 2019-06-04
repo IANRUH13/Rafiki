@@ -86,38 +86,72 @@ def share():
 
 
 
-
-@app.route('/register',methods=['GET', 'POST'])
-def add_rafiki():
-
+@app.route('/respond/<int:share_id>',methods=['GET','POST'])
+@jwt_optional
+def respond(share_id):
+    current_user = get_jwt_identity()
 
     if request.method == 'POST':
+        if current_user:
+            photo = current_user[2]
+            email = current_user[1]
+            comment = request.form['story']
+            User().respond(share_id, comment, email)
+            return redirect(url_for('respond',share_id=share_id))
 
-        file = request.files['file']
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            photo=filename
         else:
-            photo = 'user.png'
-
-        name = request.form['name']
-        email=request.form['email']
-        password=request.form['pword']
-        User().save_users(name,email,password,photo)
-        user = User().login(email,password)
-        access_token = create_access_token(identity=user, expires_delta=False)
-        # Set the JWT cookies in the response
-        resp = make_response(redirect(url_for('rafiki')))
-        set_access_cookies(resp, access_token)
-        flash("Success")
-        return resp
-
-        return Response(render_template('index.html'))
+            email = "jdoe@email.com"
+            comment = request.form['story']
+            User().respond(share_id, comment, email)
+            return redirect(url_for('respond',share_id=share_id))
 
 
+    if current_user:
+        photo = current_user[2]
+        resp = User().get_respond(share_id)
+        headin = User().get_title(share_id)
+        title = headin[0]
+        posted_on = headin[1]
+        return Response(render_template('respond.html',photo=photo,stories=resp,title=title,posted_on=posted_on))
 
-@app.route('/logout',methods=['GET', 'POST'])
+
+    else:
+        resp = User().get_respond(share_id)
+        headin = User().get_title(share_id)
+        title = headin[0]
+        posted_on = headin[1]
+
+        return Response(render_template('respond.html',stories=resp,title=title,posted_on=posted_on))
+
+
+@app.route('/register',methods=['POST'])
+def add_rafiki():
+
+    file = request.files['file']
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        photo=filename
+    else:
+        photo = 'user.png'
+
+    name = request.form['name']
+    email=request.form['email']
+    password=request.form['pword']
+    User().save_users(name,email,password,photo)
+    user = User().login(email,password)
+    access_token = create_access_token(identity=user, expires_delta=False)
+    # Set the JWT cookies in the response
+    resp = make_response(redirect(url_for('rafiki')))
+    set_access_cookies(resp, access_token)
+    flash("Success")
+    return resp
+
+    return Response(render_template('index.html'))
+
+
+
+@app.route('/logout',methods=['GET','POST'])
 def logout():
     resp = make_response(redirect(url_for('rafiki')))
     unset_jwt_cookies(resp)
@@ -125,26 +159,24 @@ def logout():
     return resp
 
 
-@app.route('/login',methods=['GET', 'POST'])
+@app.route('/login',methods=['POST'])
 def auth():
+    email = request.form['email']
+    password = request.form['pword']
 
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['pword']
+    user = User().login(email,password)
 
-        user = User().login(email,password)
+    if user:
+        access_token = create_access_token(identity=user, expires_delta=False)
+        # Set the JWT cookies in the response
+        resp = make_response(redirect(url_for('rafiki')))
+        set_access_cookies(resp, access_token)
+        flash("Success")
+        return resp
 
-        if user:
-            access_token = create_access_token(identity=user, expires_delta=False)
-            # Set the JWT cookies in the response
-            resp = make_response(redirect(url_for('rafiki')))
-            set_access_cookies(resp, access_token)
-            flash("Success")
-            return resp
-
-        else:
-            flash('Error')
-            return Response(render_template('index.html'))
+    else:
+        flash('Error')
+        return Response(render_template('index.html'))
 
 
 if __name__ == '__main__':

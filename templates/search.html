@@ -1,0 +1,205 @@
+{% extends "main.html" %}
+{% block content %}
+<body>
+  <nav>
+  <div class="row">
+    <div class="center">
+      <img onclick="showBtn()" class="menu-icon" src="/static/menu.png"/>
+      <a href="{{ url_for('rafiki') }}"> <button class ="menu-btn">Home</button></a>
+      <a href="{{ url_for('share') }}"><button class ="menu-btn">Open Up</button></a>
+      <a href="{{ url_for('about') }}"> <button class ="menu-btn">About Rafiki</button></a>
+
+         {% if photo %}
+          <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
+
+              <div class="right"><img src="/static/{{ photo }}"/></div>
+                      <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
+            <input type="submit"/>
+        </form>
+
+
+      {% else %}
+      <button class ="menu-btn" onclick="register()">Register</button>
+
+        <div class="right"><img src="/static/user.png"/></div>
+                  <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
+            <input type="submit">
+
+        </form>
+
+      {% endif %}
+
+      </div>
+
+    </div>
+
+</nav>
+
+<section>
+  <div class="row">
+    <div class="center">
+        <div class="col-8 center">
+      <div id="login" style="display:none;">
+         <div class="container">
+            <a href="#"><p onclick="collapse()" id="close">X</p></a>
+            <form action="{{url_for('auth')}}" method = "post" enctype=multipart/form-data>
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text"  maxlength="100" required name="pword">
+
+                <button type="submit">
+                <span aria-hidden="true"></span>Login</button>
+                <span>Become a Rafiki?<a href="#" onclick="register()">Sign up</a></span>
+            </form>
+          </div>
+        </div>
+</div>
+<div class="col-8">
+      <div id="add_user" style="display:none;">
+       <div class="container">
+          <a href="#"><p onclick="collapse()" id="close">X</p></a>
+          <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
+              <div class="round"><img class="round" id="output_image" "/></div>
+                <input type="file" accept="image/*" onchange="preview_image(event)" name="file"><br />
+                <label for="name">Enter Name:</label>
+                <input type ="text" maxlength="100" required name="name">
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text" maxlength="100" required name="pword">
+
+
+                <div class="padding-bottom"></div>
+                <button type="submit" >
+                <span aria-hidden="true"></span>Sign Up</button>
+                <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
+            </form>
+          </div>
+        </div>
+      </div>
+
+        <div class="padding-bottom"></div>
+
+        <div class="divider blue"></div>
+        <div class="header">
+          <h1 class="orange-text">{{ count }} Found</h1>
+        </form>
+
+        </div>
+        <div class="padding-bottom"></div>
+
+        <div class="padding-bottom"></div>
+
+
+
+        {% for story in stories %}
+
+          <div class="container-wrapper">
+
+            <div class="wrap">
+              <p> {{ story[1] }} </p>
+                <p style="text-align:right;width:inherit;margin-bottom:0px;" > {{ story[2] }} </p>
+                <a href="{{ url_for('respond',share_id=story[0]) }}"><button  style="margin-bottom:0px;" type="submit">Reply</button></a>
+
+            </div>
+          </div>
+          <div class="padding-bottom"></div>
+        {% endfor %}
+      </div>
+    </div>
+</section>
+</body>
+<script>
+
+  function register() {
+  var x = document.getElementById("add_user");
+  var y = document.getElementById("login");
+  y.style.display = "none";
+
+  if (x.style.display === "block") {x.style.display === "block"
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+
+function showBtn() {
+
+  var elems = document.getElementsByClassName('menu-btn');
+
+  var x = document.getElementsByClassName('menu-btn')[0]
+  if (x.style.display === "block"){
+    for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'none';
+     }
+   }else{
+         for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'block';
+     }
+
+
+}
+}
+
+
+
+function login() {
+     var x = document.getElementById("add_user");
+     var y = document.getElementById("login");
+
+      x.style.display = "none";
+
+
+  if (y.style.display === "block") {y.style.display === "block"
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
+  }
+}
+
+
+function share() {
+     var story = document.getElementById("tale");
+
+  if (story.style.display === "block") {y.style.display === "block"
+    story.style.display = "none";
+  } else {
+    story.style.display = "block";
+  }
+}
+
+
+
+
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+
+function collapse() {
+     var x = document.getElementById("add_user");
+      var y = document.getElementById("login");
+       var z = document.getElementById("tale");
+     x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "none";
+
+
+    }
+
+</script>
+{% endblock %}

@@ -140,6 +140,9 @@ footer{
     margin:0 auto;
 }
 
+.header{
+  border-bottom:1px solid #ff9800;
+}
 
 /*  SPACING */
 .space-50 {

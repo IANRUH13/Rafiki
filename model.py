@@ -14,12 +14,13 @@ class User():
             "name": name,
             "email": email,
             "password":sha256_crypt.encrypt(password),
-            "photo": photo
+            "photo": photo,
+            "isRafiki":True
 
         }
 
-        query = """INSERT INTO Users (name,email,password,photo)
-            VALUES(%(name)s,%(email)s, %(password)s,%(photo)s);"""
+        query = """INSERT INTO Users (name,email,password,photo,isRafiki)
+            VALUES(%(name)s,%(email)s, %(password)s,%(photo)s,%(isRafiki)s);"""
 
         self.cursor.execute(query, user)
         self.database.conn.commit()
@@ -32,14 +33,11 @@ class User():
         self.cursor.execute(query)
         pword = self.cursor.fetchone()
 
-        isValid = sha256_crypt.verify(password,pword[0])
+        query = "SELECT name,email,photo FROM Users WHERE email = '%s';" % (email)
+        self.cursor.execute(query)
+        users = self.cursor.fetchone()
 
-        if isValid:
-            query = "SELECT name,email,photo FROM Users WHERE email = '%s';" % (email)
-            self.cursor.execute(query)
-            users = self.cursor.fetchone()
-
-            return users
+        return users
 
 
     def share(self,email,story):
@@ -89,7 +87,7 @@ class User():
 
 
     def get_respond(self,share_id):
-        query = "SELECT comment,postedon FROM comments where share_id = '%s' ORDER BY comment_id DESC;" % (share_id)
+        query = "SELECT users.name,users.photo,users.isRafiki,comments.comment,comments.postedon FROM users,comments where comments.email =  users.email and comments.share_id = '%s' ORDER BY comment_id DESC;" % (share_id)
         self.cursor.execute(query)
         stories= self.cursor.fetchall()
 
@@ -99,6 +97,54 @@ class User():
         self.cursor.execute("SELECT * FROM share WHERE story LIKE '%s';" % ("%" + search + "%"))
         query = self.cursor.fetchall()
         return query
+
+    def update_photo(self,email,photo):
+        user = {
+            "photo": photo
+        }
+
+        query = "UPDATE users SET photo = '%s' WHERE email = '%s';"% (photo, email)
+        self.cursor.execute(query, user)
+        self.database.conn.commit()
+        return user
+
+
+    def update_email(self,email,old,new,verify):
+        user = {
+            "email": new
+        }
+
+        if new == verify:
+            query = "UPDATE users SET email = '%s' WHERE email = '%s';"% (new, email)
+            self.cursor.execute(query, user)
+            self.database.conn.commit()
+            return user
+
+
+    def update_password(self,email,password):
+        user = {
+            "password":sha256_crypt.encrypt(password)
+        }
+
+        query = "UPDATE users SET password = '%s' WHERE email = '%s';"% (password, email)
+        self.cursor.execute(query, user)
+        self.database.conn.commit()
+        return user
+
+
+
+    def update_name(self,email,name):
+        user = {
+            "name":name
+        }
+
+
+        query = "UPDATE users SET name = '%s' WHERE email = '%s';"% (name, email)
+        self.cursor.execute(query, user)
+        self.database.conn.commit()
+        return user
+
+
 
 
 

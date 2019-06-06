@@ -1,0 +1,392 @@
+
+{% extends "main.html" %}
+{% block content %}
+<body>
+ <nav>
+  <div class="row">
+    <div class="center">
+      <img onclick="showBtn()" class="menu-icon" src="/static/menu.png"/>
+      <a href="{{ url_for('rafiki') }}"> <button class ="menu-btn">Home</button></a>
+      <a href="{{ url_for('share') }}"><button class ="menu-btn">Open Up</button></a>
+      <a href="{{ url_for('about') }}"> <button class ="menu-btn">About Rafiki</button></a>
+
+         {% if photo %}
+          <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
+
+              <div class="right"><img src="/static/{{ photo }}"/></div>
+                      <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
+            <input type="submit"/>
+        </form>
+
+
+      {% else %}
+      <button class ="menu-btn" onclick="register()">Register</button>
+
+        <div class="right"><img src="/static/user.png"/></div>
+                  <form action="{{url_for('find')}}" method="post">
+          <input type="search" placeholder="Search" name="story">
+            <input type="submit">
+
+        </form>
+
+      {% endif %}
+
+      </div>
+
+    </div>
+
+</nav>
+<section>
+    <div class="row">
+    <div class="center">
+        <div class="col-8">
+    <div id="login" style="display:none;">
+         <div class="container">
+            <a href="#"><p onclick="collapse()" id="close">X</p></a>
+      <form action="{{url_for('auth')}}" method="post">
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text"  maxlength="100" required name="pword">
+
+
+                <button type="submit">Login</button>
+                <span>Become a Rafiki?<a href="#" onclick="register()">Sign up</a></span>
+
+            </form>
+        </div>
+
+</div>
+
+<div id="add_user" style="display:none;">
+
+ <div class="container">
+    <a href="#"><p onclick="collapse()" id="close">X</p></a>
+
+      <form action="{{url_for('add_rafiki')}}" method = "post" enctype=multipart/form-data>
+
+
+
+              <div class="round"><img class="round" id="output_image" "/></div>
+              <input type="file" accept="image/*" onchange="preview_image(event)" name="file">
+
+
+    <br />
+                <label for="name">Enter Name:</label>
+                <input type ="text" maxlength="100" required name="name">
+
+
+
+
+                <label for="email">Email:</label>
+                <input type ="text"  maxlength="100" required name="email">
+
+                <label for="pword">Password:</label>
+                <input type ="text" maxlength="100" required name="pword">
+
+
+                <br /><br />
+                <button type="submit" id="submit" type="submit">
+                <span aria-hidden="true"></span>Sign Up</button>
+
+                 <span>Already a Rafiki?<a href="#" onclick="login()">Sign in</a></span>
+               </form>
+            </div>
+          </div>
+
+
+
+
+
+
+</div>
+
+
+
+</div>
+</div>
+
+<div class="row">
+  <div class="center">
+    <div class="col-4">
+      <ul class="preferences">
+        <li onclick="view()" class="head">Profile</li>
+        <li onclick="preferences()">Preferences</li>
+        <li onclick="email()">Change Email</li>
+        <li onclick="password()">Change Password</li>
+      </ul>
+    </div>
+
+    <div id="view" class="col-8">
+      <ul class="preferences">
+        <li class="head">Profile</li>
+      </ul>
+
+      <div class="col-6 pref">
+        <img src="/static/{{ photo }}"/>
+      </div>
+
+      <div class="col-6">
+        <ul class="preferences">
+          <li>{{ name }}</li>
+          <li> {{ email }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="preferences" class="col-8">
+        <ul class="preferences">
+          <li class="head">Preferences</li>
+        </ul>
+
+        <div class="row">
+          <form action="{{url_for('changephoto')}}" method = "post" enctype=multipart/form-data>
+            <h2 style="text-align:center;" class="orange-text">Change Photo</h2>
+            <div class="round"><img id="output" style="width:200px;height: 200px;"/></div>
+            <input type="file" accept="image/*" onchange="preview(event)" name="file">
+            <div class="padding-bottom"></div>
+            <button type="submit">Update</button>
+          </form>
+        </div>
+
+        <div class="row">
+          <form action="{{url_for('changename')}}" method = "post" enctype=multipart/form-data>
+            <h2 style="text-align:center;" class="orange-text">Change Name</h2>
+
+            <label for="name">Name:</label>
+            <input type ="text" required name="name">
+            <div class="padding-bottom"></div>
+
+            <button type="submit">Update</button>
+          </form>
+        </div>
+      </div>
+
+    <div id="email" class="col-8">
+          <ul class="preferences">
+    <li class="head">Change Email</li>
+  </ul>
+  <div class="padding-bottom"></div>
+        <form action="{{url_for('changeemail')}}" method = "post" enctype=multipart/form-data>
+            <div class="row">
+
+               <label for="email">Old Email:</label>
+                <input type ="email" required name="old">
+
+
+                <label for="npwd">New Email:</label>
+                <input type ="email" required name="new">
+
+
+                <label for=email">Confirm Email:</label>
+                <input type ="email" required name="verify">
+                <button type="submit">Update</button>
+              </div>
+              </form>
+            </div>
+
+          <div id="password" class="col-8">
+          <ul class="preferences">
+    <li class="head">Change Password</li>
+  </ul>
+  <div class="padding-bottom"></div>
+
+        <form action="{{url_for('changepassword')}}" method = "post" enctype=multipart/form-data>
+            <div class="row">
+               <label for="old">Old Password:</label>
+                <input type ="password" required name="old">
+
+
+                <label for="password">New Password:</label>
+                <input type ="password" required name="password">
+
+
+                <label for="verify">Confirm Password:</label>
+                <input type ="password" required name="verify">
+              </div>
+              <button type="submit">Update</button>
+              </form>
+            </div>
+
+
+</div>
+</section>
+<div class="padding-bottom"></div>
+</body>
+<script>
+function register() {
+  var x = document.getElementById("add_user");
+  var y = document.getElementById("login");
+       var z = document.getElementById("email");
+           var p = document.getElementById("password");
+
+      p.style.display = "none";
+
+      z.style.display = "none";
+
+  y.style.display = "none";
+
+
+  if (x.style.display === "block") {x.style.display === "block"
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+function login() {
+     var x = document.getElementById("add_user");
+     var y = document.getElementById("login");
+     var z = document.getElementById("email");
+      x.style.display = "none";
+      z.style.display = "none";
+          var p = document.getElementById("password");
+
+      p.style.display = "none";
+
+
+
+  if (y.style.display === "block") {y.style.display === "block"
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
+  }
+}
+
+function view() {
+     var x = document.getElementById("view");
+     var y = document.getElementById("preferences");
+      var z = document.getElementById("email");
+          var p = document.getElementById("password");
+
+      p.style.display = "none";
+
+
+      y.style.display = "none";
+      z.style.display = "none";
+
+
+  if (x.style.display === "block") {x.style.display === "block"
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+
+function email() {
+     var x = document.getElementById("view");
+     var y = document.getElementById("preferences");
+     var z = document.getElementById("email");
+         var p = document.getElementById("password");
+
+      p.style.display = "none";
+
+
+      y.style.display = "none";
+      x.style.display = "none";
+
+
+  if (z.style.display === "block") {z.style.display === "block"
+    z.style.display = "none";
+  } else {
+    z.style.display = "block";
+  }
+}
+
+
+function preferences() {
+
+     var y = document.getElementById("preferences");
+     var x = document.getElementById("view");
+     var z = document.getElementById("email");
+    var p = document.getElementById("password");
+
+      p.style.display = "none";
+
+      x.style.display = "none";
+      z.style.display = "none";
+
+
+  if (y.style.display === "block") {y.style.display === "block"
+    y.style.display = "none";
+  } else {
+    y.style.display = "block";
+  }
+}
+
+
+function password() {
+
+     var y = document.getElementById("preferences");
+     var x = document.getElementById("view");
+     var z = document.getElementById("email");
+    var p = document.getElementById("password");
+
+      y.style.display = "none";
+      x.style.display = "none";
+      z.style.display = "none";
+
+
+  if (p.style.display === "block") {p.style.display === "block"
+    p.style.display = "none";
+  } else {
+    p.style.display = "block";
+  }
+}
+
+
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+function preview(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+
+
+function collapse() {
+     var x = document.getElementById("add_user");
+      var y = document.getElementById("login");
+      var z = document.getElementById("about");
+     x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "block";
+
+
+    }
+
+      function showBtn() {
+
+  var elems = document.getElementsByClassName('menu-btn');
+
+  var x = document.getElementsByClassName('menu-btn')[0]
+  if (x.style.display === "block"){
+    for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'none';
+     }
+   }else{
+         for (var i=0;i<elems.length;i+=1){
+       elems[i].style.display = 'block';
+     }
+}
+}
+
+</script>
+{% endblock %}

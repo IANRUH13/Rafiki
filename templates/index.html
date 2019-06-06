@@ -12,7 +12,7 @@
          {% if photo %}
           <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
-              <div class="right"><img src="/static/{{ photo }}"/></div>
+              <div class="right"><a href="{{ url_for('profile') }}"><img src="/static/{{ photo }}"/></a></div>
                       <form action="{{url_for('find')}}" method="post">
           <input type="search" placeholder="Search" name="story">
             <input type="submit"/>

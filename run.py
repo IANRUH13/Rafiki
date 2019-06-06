@@ -50,6 +50,100 @@ def about():
     return Response(render_template('about.html'))
 
 
+@app.route('/profile',methods=['GET','POST'])
+@jwt_required
+def profile():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+
+    return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+
+
+
+
+
+@app.route('/profile/preferences/password',methods=['GET','POST'])
+@jwt_required
+def changepassword():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+
+    if request.method == 'POST':
+
+        old = request.form['old']
+        password = request.form['password']
+        verify = request.form['verify']
+        if password == verify:
+            User().update_password(email,password)
+        return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+    return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+
+
+
+@app.route('/profile/preferences/photo',methods=['GET','POST'])
+@jwt_required
+def changephoto():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            photo=filename
+        else:
+            photo = 'user.png'
+
+        User().update_photo(email,photo)
+
+        return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+    return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+
+
+
+@app.route('/profile/preferences/name',methods=['GET','POST'])
+@jwt_required
+def changename():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+
+    if request.method == 'POST':
+        name = request.form['name']
+        User().update_name(email,name)
+
+        return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+    return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+
+
+
+@app.route('/profile/preferences/email',methods=['GET','POST'])
+@jwt_required
+def changeemail():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+
+    if request.method == 'POST':
+        old = request.form['old']
+        new = request.form['new']
+        verify = request.form['verify']
+        User().update_email(email,old,new,verify)
+
+        return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+    return Response(render_template('rafiki.html',name=name,email=email,photo=photo))
+
+
+
 
 @app.route('/share',methods=['GET','POST'])
 @jwt_optional

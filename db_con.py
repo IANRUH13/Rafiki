@@ -21,6 +21,7 @@ class database_setup(object):
             email VARCHAR(50)  UNIQUE NOT NULL,
             password VARCHAR(256) NOT NULL,
             photo VARCHAR(255) NOT NULL,
+            isRafiki BOOLEAN NOT NULL,
             PRIMARY KEY (email)
             );""")
 

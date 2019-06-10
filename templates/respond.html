@@ -12,7 +12,7 @@
          {% if photo %}
           <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
-              <div class="right"><img src="/static/{{ photo }}"/></div>
+              <div class="right"><a href="{{ url_for('profile') }}"><img src="/static/{{ photo }}"/></a></div>
                       <form action="{{url_for('find')}}" method="post">
           <input type="search" placeholder="Search" name="story">
             <input type="submit"/>
@@ -125,20 +125,24 @@
           {% for story in stories %}
 
           <div class="container-wrapper">
-
+    <div class="padding-bottom"></div>
 
             <div class="wrap">
               {% if story[2] == True %}
+              <div class="row">
 
-              <img src="/static/{{ story[1] }}"/>
+              <img class="left" src="/static/{{ story[1] }}"/>
 
-              <p> {{ story[0] }} </p>
 
+                <a href="{{ url_for('chat',user_id=story[5]) }}">
+                  <span style="vertical-align:top;font-size: 24px;" class="orange-text">{{ story[0] }}</span> </a>
+                <img style="width:24px; height:24px;" src="/static/verify.png"/>
+         <a href="{{ url_for('chat') }}">  <span class="title">Rafiki</span></a>
+      </div>
+          <div class="row">
               <p> {{ story[3] }} </p>
-
-
               <p style="text-align:right;width:inherit;margin-bottom:0px;">{{ story[4] }}</p>
-
+</div>
             {% else %}
 
                 <p> {{ story[3] }} </p>

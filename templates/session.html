@@ -112,30 +112,65 @@
 <div class="row">
   <div class="center">
     <div class="col-4">
-      <ul class="preferences">
-        <li onclick="view()" class="head">Profile</li>
-        <li onclick="preferences()">Preferences</li>
-        <li onclick="email()">Change Email</li>
-        <li onclick="password()">Change Password</li>
-        <a href="{{url_for('session')}}"><li class="head">Session</li></a>
-      </ul>
+
+                <ul class="preferences" id="rooms">
+
+                </ul>
+
     </div>
 
-    <div id="view" class="col-8">
-      <ul class="preferences">
-        <li class="head">Profile</li>
-      </ul>
+    <div class="col-8">
 
-      <div class="col-6 pref">
-        <img src="/static/{{ photo }}"/>
-      </div>
 
-      <div class="col-6">
-        <ul class="preferences">
-          <li>{{ name }}</li>
-          <li> {{ email }}</li>
-        </ul>
-      </div>
+
+
+
+
+    <div class="container-fluid">
+        <div class="row" id="mainrow">
+
+            <main role="main" id="main">
+
+                <span>👈 Select a chat to load the messages</span>
+
+                <div class="chat" style="margin-bottom:150px">
+                    <h5 id="room-title"></h5>
+                    <p>&nbsp;</p>
+                    <div class="response">
+                        <form id="replyMessage">
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Message" class="form-control" name="message" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <tbody id="chat-msgs">
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <div id="preferences" class="col-8">
@@ -217,6 +252,13 @@
 </section>
 <div class="padding-bottom"></div>
 </body>
+
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/axios.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin.js') }}"></script>
 <script>
 function register() {
   var x = document.getElementById("add_user");

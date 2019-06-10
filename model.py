@@ -87,7 +87,7 @@ class User():
 
 
     def get_respond(self,share_id):
-        query = "SELECT users.name,users.photo,users.isRafiki,comments.comment,comments.postedon FROM users,comments where comments.email =  users.email and comments.share_id = '%s' ORDER BY comment_id DESC;" % (share_id)
+        query = "SELECT users.name,users.photo,users.isRafiki,comments.comment,comments.postedon,users.user_id FROM users,comments where comments.email =  users.email and comments.share_id = '%s' ORDER BY comment_id DESC;" % (share_id)
         self.cursor.execute(query)
         stories= self.cursor.fetchall()
 
@@ -144,8 +144,9 @@ class User():
         self.database.conn.commit()
         return user
 
+    def get_user(self,user_id):
+        query = "SELECT name,email,photo FROM Users WHERE user_id = '%s';" % (user_id)
+        self.cursor.execute(query)
+        users = self.cursor.fetchone()
 
-
-
-
-
+        return users

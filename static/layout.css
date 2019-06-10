@@ -16,7 +16,10 @@
 .row{
   width:100%;
 }
-
+section{
+    position: relative;
+  min-height: 100vh;
+}
 .row::after{
   content:"";
   clear:both;
@@ -41,13 +44,18 @@ nav{
   line-height: 56px;
 }
 
+
+
 footer{
-  padding: 10px 0px;
+
+
+    padding: 10px 0px;
   color:rgba(51, 51, 51, 0.0)8;
   background-color: #ff9800 !important;
   width: 100%;
   color: white;
   text-align: center;
+
 }
 
 
@@ -108,9 +116,12 @@ footer{
 .container-wrapper{
   width: 100%;
   height:inherit;
+  border-bottom:1px solid #ff9800;
 
-  background: #f7f7f7;
-   border-bottom:1px solid #ff9800;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f1f1f1;
 
 }
 
@@ -118,9 +129,12 @@ footer{
   width:100%;
   height: 100%;
     padding:0px 10px;
+    text-align: justify;
 
 }
-#preferences,#email,#password{
+
+
+#preferences,#prefemail,#password{
   display:none;
 }
 
@@ -256,7 +270,7 @@ margin: 0 auto;
   border-radius: 50%;
 }
 
-.wrap img{
+.left{
   float:left;
 }
 
@@ -357,6 +371,19 @@ button {
 
   background-color:  #ff9800 !important;
    color:white;
+}
+
+.status{
+  color:white;
+
+  text-align: center;
+}
+/*  FONT */
+.title {
+    color: #4CAF50 !important;
+    font-size: 24px;
+    vertical-align: top;
+
 }
 
 
@@ -521,5 +548,239 @@ nav form{
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none;
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+
+.site-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
+  background: url(../img/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+}
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.inner {
+  padding: 2rem;
+}
+
+
+
+
+
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+.mastfoot {
+  color: rgba(255,255,255,.5);
+}
+
+@media (min-width: 40em) {
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+
+
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 62em) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 42rem;
+  }
+}
+
+.chatbubble {
+
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    transform: translateY(300px);
+    transition: transform .3s ease-in-out;
+}
+.chatbubble.opened {
+    transform: translateY(0)
+}
+.chatbubble .unexpanded {
+    display: block;
+    background-color:#ff9800 !important;
+    padding: 10px 15px 10px;
+    position: relative;
+    cursor: pointer;
+    width: 350px;
+    border-radius: 10px 10px 0 0;
+}
+.chatbubble .expanded {
+    height: 300px;
+    width: 350px;
+    background-color: #fff;
+    text-align: left;
+    padding: 10px;
+    color: #333;
+    text-shadow: none;
+    font-size: 14px;
+}
+.chatbubble .chat-window {
+  overflow: auto;
+}
+.chatbubble .loader-wrapper {
+    margin-top: 50px;
+    text-align: center;
+}
+.chatbubble .messages {
+    display: none;
+    list-style: none;
+    margin: 0 0 50px;
+    padding: 0;
+}
+.chatbubble .messages li {
+    width: 85%;
+    float: left;
+    padding: 10px;
+    border-radius: 5px 5px 5px 0;
+    font-size: 14px;
+    background: #c9f1e6;
+    margin-bottom: 10px;
+}
+.chatbubble .messages li .sender {
+    font-weight: 600;
+}
+.chatbubble .messages li.support {
+    float: right;
+    text-align: right;
+    color: #fff;
+    background-color:  #ff9800 !important;
+    border-radius: 5px 5px 0 5px;
+}
+.chatbubble .chats .input {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    left: 0;
+    width: 100%;
+    background: #f0f0f0;
+    display: none;
+}
+.chatbubble .chats .input .form-group {
+    width: 80%;
+}
+.chatbubble .chats .input input {
+    width: 100%;
+}
+.chatbubble .chats .input button {
+    width: 20%;
+}
+
+.chatbubble .chats {
+  display: none;
+}
+.chatbubble .login-screen {
+  margin-top: 20px;
+  display: none;
+}
+.chatbubble .chats.active,
+.chatbubble .login-screen.active {
+  display: block;
+}
+
+/* Loader Credit: https://codepen.io/ashmind/pen/zqaqpB */
+.chatbubble .loader {
+  color: #e23e3e;
+  font-family: Consolas, Menlo, Monaco, monospace;
+  font-weight: bold;
+  font-size: 10vh;
+  opacity: 0.8;
+}
+.chatbubble .loader span {
+  display: inline-block;
+  -webkit-animation: pulse 0.4s alternate infinite ease-in-out;
+          animation: pulse 0.4s alternate infinite ease-in-out;
+}
+.chatbubble .loader span:nth-child(odd) {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
+}
+@-webkit-keyframes pulse {
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+@keyframes pulse {
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
 
 

@@ -1,6 +1,25 @@
+
 {% extends "main.html" %}
 {% block content %}
-<body>
+
+
+
+<style>
+
+        .cont{
+     width: 100%;
+     padding-right: 15px;
+     padding-left: 15px;
+     margin-right: auto;
+     margin-left: auto;
+}
+
+
+
+    body{
+      margin:0;
+    }
+    </style>
   <nav>
   <div class="row">
     <div class="center">
@@ -12,7 +31,7 @@
          {% if photo %}
           <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
-              <div class="right"><a href="{{ url_for('profile') }}"><img src="/static/{{ photo }}"/></a></div>
+              <div class="right"><img src="/static/{{ photo }}"/></div>
                       <form action="{{url_for('find')}}" method="post">
           <input type="search" placeholder="Search" name="story">
             <input type="submit"/>
@@ -37,7 +56,13 @@
 
 </nav>
 
+
+
+
+
+
 <section>
+
   <div class="row">
     <div class="center">
         <div class="col-8 center">
@@ -86,120 +111,52 @@
       </div>
 
         <div class="padding-bottom"></div>
-
-        <div class="divider blue"></div>
-        <div class="header">
-          <h1 class="orange-text">{{ count }} Found</h1>
-        </form>
-
+  <div class="chatbubble">
+        <div class="unexpanded">
+            <div class="status">Connect</div>
         </div>
-        <div class="padding-bottom"></div>
-
-        <div class="padding-bottom"></div>
-
-
-
-        {% for story in stories %}
-
-          <div class="container-wrapper">
-
-            <div class="wrap">
-              <p> {{ story[1] }} </p>
-                <p style="text-align:right;width:inherit;margin-bottom:0px;" > {{ story[2] }} </p>
-                <a href="{{ url_for('respond',share_id=story[0]) }}"><button  style="margin-bottom:0px;" type="submit">Reply</button></a>
-
+        <div class="expanded chat-window">
+          <div class="login-screen cont">
+            <form id="loginScreenForm">
+              <div class="form-group">
+                <input type="text" class="form-control" id="fullname" placeholder="Name*" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email Address*" required>
+              </div>
+              <button type="submit" class="btn btn-block btn-primary">Start Chat</button>
+            </form>
+          </div>
+          <div class="chats">
+            <div class="loader-wrapper">
+              <div class="loader">
+                <span>{</span><span>}</span>
+              </div>
+            </div>
+            <ul class="messages clearfix">
+            </ul>
+            <div class="input">
+              <form class="form-inline" id="messageSupport">
+                <div class="form-group">
+                  <input type="text" autocomplete="off" class="form-control" id="newMessage" placeholder="Enter Message">
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+              </form>
             </div>
           </div>
-          <div class="padding-bottom"></div>
-        {% endfor %}
-      </div>
+        </div>
     </div>
+    </div>
+  </div>
+
 </section>
-</body>
-<script>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/axios.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
 
-  function register() {
-  var x = document.getElementById("add_user");
-  var y = document.getElementById("login");
-  y.style.display = "none";
-
-  if (x.style.display === "block") {x.style.display === "block"
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-}
-
-function showBtn() {
-
-  var elems = document.getElementsByClassName('menu-btn');
-
-  var x = document.getElementsByClassName('menu-btn')[0]
-  if (x.style.display === "block"){
-    for (var i=0;i<elems.length;i+=1){
-       elems[i].style.display = 'none';
-     }
-   }else{
-         for (var i=0;i<elems.length;i+=1){
-       elems[i].style.display = 'block';
-     }
-
-
-}
-}
-
-
-
-function login() {
-     var x = document.getElementById("add_user");
-     var y = document.getElementById("login");
-
-      x.style.display = "none";
-
-
-  if (y.style.display === "block") {y.style.display === "block"
-    y.style.display = "none";
-  } else {
-    y.style.display = "block";
-  }
-}
-
-
-function share() {
-     var story = document.getElementById("tale");
-
-  if (story.style.display === "block") {y.style.display === "block"
-    story.style.display = "none";
-  } else {
-    story.style.display = "block";
-  }
-}
-
-
-
-
-function preview_image(event)
-{
- var reader = new FileReader();
- reader.onload = function()
- {
-  var output = document.getElementById('output_image');
-  output.src = reader.result;
- }
- reader.readAsDataURL(event.target.files[0]);
-}
-
-
-function collapse() {
-     var x = document.getElementById("add_user");
-      var y = document.getElementById("login");
-       var z = document.getElementById("tale");
-     x.style.display = "none";
-      y.style.display = "none";
-      z.style.display = "none";
-
-
-    }
-
-</script>
 {% endblock %}

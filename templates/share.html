@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-<body>
+
   <nav>
   <div class="row">
     <div class="center">
@@ -12,7 +12,7 @@
          {% if photo %}
           <a href="{{ url_for('logout') }}"> <button class ="menu-btn">LogOut</button></a>
 
-              <div class="right"><img src="/static/{{ photo }}"/></div>
+              <div class="right"><a href="{{ url_for('profile') }}"><img src="/static/{{ photo }}"/></a></div>
                       <form action="{{url_for('find')}}" method="post">
           <input type="search" placeholder="Search" name="story">
             <input type="submit"/>
@@ -38,6 +38,7 @@
 </nav>
 
 <section>
+
   <div class="row">
     <div class="center">
         <div class="col-8 center">
@@ -91,7 +92,7 @@
         <div class="banner" alt="man on moutain"></div>
         <div class="padding-bottom"></div>
 
-        <button onclick="share()">Post</button>
+        <button onclick="share()">Open Up</button>
         <div class="padding-bottom"></div>
 
         <div id="tale" style="display:none;">
@@ -100,7 +101,7 @@
             <a href="#"><p onclick="collapse()" id="close">X</p></a>
             <div class="wrap">
               <form action="{{url_for('share')}}" method = "post">
-                <textarea name="story"></textarea>
+                <textarea placeholder="Whats on your mind...?" name="story"></textarea>
                 <button  type="submit">Create</button>
               </form>
             </div>
@@ -122,7 +123,10 @@
         {% endfor %}
       </div>
     </div>
+
+
 </section>
+
 </body>
 <script>
 

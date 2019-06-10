@@ -1,17 +1,26 @@
-from flask import Flask,jsonify,make_response,request,render_template,Response,current_app,flash,redirect,url_for
+from pusher import pusher
+
+from flask import Flask,jsonify,make_response,request,render_template,Response,current_app,flash,redirect,url_for,json
 from werkzeug import secure_filename
 from flask_jwt_extended import (
 JWTManager, jwt_required, create_access_token,
 get_jwt_identity,set_access_cookies,unset_jwt_cookies,jwt_optional
-)
-import os
 
+
+)
+
+import simplejson
+import os
+from flask_cors import CORS
 
 from model import User
 
 app = Flask(__name__)
 app.secret_key ="371a7a78d634dd71ce5f215d4827ea919d00ea50a9e20482d7adefd8a5156b78"
 
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 UPLOAD_FOLDER = '/home/mugz/Projects/Rafiki/static'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -21,10 +30,54 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 
 
+pusher = pusher_client = pusher.Pusher(
+app_id = "799542",
+key = "4a1bd49fedffe007b1a0",
+secret = "0b04b21ab8798703a01e",
+cluster = "ap2",
+ssl=True
+)
+
+pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
 
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/rafiki/room')
+def chat():
+
+    return render_template('room.html')
+
+
+@app.route('/rafiki/session')
+@jwt_required
+def session():
+    current_user = get_jwt_identity()
+    name = current_user[0]
+    email = current_user[1]
+    photo = current_user[2]
+    return render_template('session.html',name=name,email=email,photo=photo)
+
+@app.route('/new/guest', methods=['POST'])
+def guestUser():
+    data = request.json
+
+    pusher.trigger(u'general-channel', u'new-guest-details', {
+        'name' : data['name'],
+        'email' : data['email']
+        })
+
+    return json.dumps(data)
+
+
+@app.route("/pusher/auth", methods=['POST'])
+def pusher_authentication():
+    auth = pusher.authenticate(channel=request.form['channel_name'],socket_id=request.form['socket_id'])
+    return json.dumps(auth)
+
+
+
 
 @app.route('/index')
 @jwt_optional

@@ -22,7 +22,7 @@ app.secret_key ="371a7a78d634dd71ce5f215d4827ea919d00ea50a9e20482d7adefd8a5156b7
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-UPLOAD_FOLDER = '/home/mugz/Projects/Rafiki/static'
+UPLOAD_FOLDER = 'static/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 jwt = JWTManager(app)

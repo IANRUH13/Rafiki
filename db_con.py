@@ -1,8 +1,7 @@
 import psycopg2
 
+
 url = "dbname='rafiki' user='postgres' host='localhost' port=5432 password='Boywonder47'"
-
-
 class database_setup(object):
 
     def __init__(self):

@@ -16,6 +16,7 @@ class database_setup(object):
 
     def create_tables(self):
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Users (
+            user_id SERIAL NOT NULL,
             name VARCHAR(50) NOT NULL,
             post_date DATE NOT NULL DEFAULT CURRENT_DATE,
             email VARCHAR(50)  UNIQUE NOT NULL,
